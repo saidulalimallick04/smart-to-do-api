@@ -1,6 +1,6 @@
 # Smart To Do API
 
-A robust, human-centric, RESTful backend for task management suitable for user-friendly applications. Built with FastAPI, MongoDB (Motor + Beanie), and JWT Authentication.
+A robust, user-centric, RESTful backend for task management suitable for user-friendly applications. Built with FastAPI, MongoDB (Motor + Beanie), and JWT Authentication.
 
 ## Features
 
@@ -9,7 +9,7 @@ A robust, human-centric, RESTful backend for task management suitable for user-f
 - **Smart Features**:
   - Auto-tagging based on keywords (e.g., "buy" -> ["shopping"]).
   - Context-aware priority inference.
-  - Friendly, human-readable error messages.
+  - Friendly, clear error messages.
 - **CRUD Operations**: Comprehensive pagination, filtering, and management.
 - **Database**: Async MongoDB with Beanie DOM.
 
@@ -29,8 +29,9 @@ A robust, human-centric, RESTful backend for task management suitable for user-f
    PROJECT_NAME="Smart To Do API"
    MONGODB_URL="mongodb://localhost:27017"
    DB_NAME="smart_todo_db"
-   SECRET_KEY="YOUR_SECRET_KEY"
+   SECRET_KEY="YOUR_SECRET_KEY_HERE"
    ACCESS_TOKEN_EXPIRE_MINUTES=30
+   REFRESH_TOKEN_EXPIRE_DAYS=7
    ALGORITHM="HS256"
    ```
 
@@ -66,9 +67,52 @@ A robust, human-centric, RESTful backend for task management suitable for user-f
    uvicorn main:app --reload
    ```
 
+## 📂 Project Structure
+
+```bash
+smart-to-do-api/
+├── api/
+│   └── v1/
+│       └── endpoints/
+│           ├── auth.py
+│           └── tasks.py
+├── core/
+│   ├── config.py
+│   ├── security.py
+│   └── utils.py
+├── db/
+│   └── mongodb.py
+├── models/
+│   ├── task.py
+│   └── user.py
+├── schemas/
+│   ├── task.py
+│   ├── token.py
+│   └── user.py
+├── tests/
+│   ├── conftest.py
+│   ├── test_auth.py
+│   └── test_tasks.py
+├── main.py
+├── pyproject.toml
+├── requirements.txt
+├── README.md
+├── API_DOCUMENTATION.md
+├── postman_collection.json
+└── .env
+```
+
 ## Testing
 
 Run the test suite to verify functionality:
+
+**Recommended (using `uv`)**:
+
+```bash
+uv run pytest
+```
+
+**Alternative (Standard)**:
 
 ```bash
 pytest

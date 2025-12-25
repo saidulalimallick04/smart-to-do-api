@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field, BeforeValidator
+from pydantic import BaseModel, EmailStr, Field, BeforeValidator, ConfigDict
 from typing import Optional, Annotated
 from uuid import UUID
 
@@ -19,5 +19,4 @@ class UserOut(BaseModel):
     email: EmailStr
     full_name: Optional[str] = None
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

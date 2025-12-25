@@ -7,3 +7,6 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: str | None = None
+
+class RefreshToken(BaseModel):
+    refresh_token: str

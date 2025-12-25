@@ -14,7 +14,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="A robust, human-centric To Do API.",
+    description="A robust, user-centric To Do API.",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -27,9 +27,15 @@ async def http_exception_handler(request, exc):
             content={"message": "Oops! We couldn't find what you were looking for. Please check the URL or ID and try again."}
         )
     if exc.status_code == 401:
+        # If the error has a specific message (like from login), use it.
+        # Otherwise, use the friendly default for missing auth.
+        message = exc.detail
+        if message in ["Not authenticated", "Unauthorized", None]:
+             message = "Hold up! You need to be logged in to do that."
+             
         return JSONResponse(
             status_code=401,
-            content={"message": "Hold up! You need to be logged in to do that."}
+            content={"message": message}
         )
     return JSONResponse(
         status_code=exc.status_code,

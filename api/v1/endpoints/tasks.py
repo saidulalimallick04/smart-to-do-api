@@ -84,4 +84,6 @@ async def delete_task(
         raise HTTPException(status_code=404, detail="Task not found")
     
     await task.delete()
-    return {"message": "Task deleted successfully"}
+    return {
+        "message": "Task deleted successfully"
+    }
