@@ -5,6 +5,8 @@ A robust, user-centric, RESTful backend for task management suitable for user-fr
 ## 🚀 Live Demo
 
 Try the API instantly without any setup: **[https://smart-to-do-api.vercel.app](https://smart-to-do-api.vercel.app)**
+Check the Server is running -  **[Check API](https://smart-to-do-api.vercel.app)**.
+Note: [Just Open the link by clicking on the link, if server shutdown, then run the server again!]
 
 ## Features
 
