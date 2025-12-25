@@ -13,6 +13,36 @@ A robust, user-centric, RESTful backend for task management suitable for user-fr
 - **CRUD Operations**: Comprehensive pagination, filtering, and management.
 - **Database**: Async MongoDB with Beanie DOM.
 
+## 🏗️ Architecture
+
+```mermaid
+graph TD
+    Client[Client Application / Postman] -->|HTTP Request| API[FastAPI Router]
+    
+    subgraph "Smart To Do API"
+        API --> Auth[Auth Module (JWT)]
+        API --> Tasks[Task Controller]
+        
+        Tasks -->|Smart Logic| AI[Smart Inference Engine]
+        Tasks -->|CRUD| DB[(MongoDB + Beanie)]
+        Auth -->|Verify/Sign| DB
+    end
+    
+    AI -->|Tags & Priority| Tasks
+    
+    style Client fill:#f9f,stroke:#333
+    style API fill:#bbf,stroke:#333
+    style DB fill:#bfb,stroke:#333
+```
+
+## 🛠️ Tech Stack
+
+- **Framework**: FastAPI (Python 3.10+)
+- **Database**: MongoDB (Async Motor driver)
+- **ODM**: Beanie (Pydantic-based)
+- **Authentication**: OAuth2 with Password Flow + JWT
+- **Tooling**: `uv` (Fast Python Package Installer), `pytest` (Testing)
+
 ## Setup
 
 1. **Clone the repository**:
@@ -101,6 +131,13 @@ smart-to-do-api/
 ├── postman_collection.json
 └── .env
 ```
+
+## 📚 Documentation
+
+For detailed API usage and examples:
+
+- 📖 **[API Documentation](API_DOCUMENTATION.md)**: Full endpoint reference, error codes, and schemas.
+- 🚀 **[Postman Collection](postman_collection.json)**: Import this file into Postman to test all endpoints instantly.
 
 ## Testing
 

@@ -24,7 +24,7 @@ async def http_exception_handler(request, exc):
     if exc.status_code == 404:
         return JSONResponse(
             status_code=404,
-            content={"message": "Oops! We couldn't find what you were looking for. Please check the URL or ID and try again."}
+            content={"message": "Oops! We couldn't find what you were looking for. Please check ID and try again."}
         )
     if exc.status_code == 401:
         # If the error has a specific message (like from login), use it.
