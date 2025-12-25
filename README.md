@@ -17,14 +17,14 @@ A robust, user-centric, RESTful backend for task management suitable for user-fr
 
 ```mermaid
 graph TD
-    Client[Client Application / Postman] -->|HTTP Request| API[FastAPI Router]
+    Client["Client Application / Postman"] -->|HTTP Request| API[FastAPI Router]
     
     subgraph "Smart To Do API"
-        API --> Auth[Auth Module (JWT)]
+        API --> Auth["Auth Module (JWT)"]
         API --> Tasks[Task Controller]
         
         Tasks -->|Smart Logic| AI[Smart Inference Engine]
-        Tasks -->|CRUD| DB[(MongoDB + Beanie)]
+        Tasks -->|CRUD| DB[("MongoDB + Beanie")]
         Auth -->|Verify/Sign| DB
     end
     
