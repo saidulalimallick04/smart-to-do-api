@@ -3,9 +3,10 @@ from contextlib import asynccontextmanager
 from api.v1.api import api_router
 from core.config import settings
 from db.mongodb import init_db
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from pathlib import Path
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -63,8 +64,9 @@ async def generic_exception_handler(request, exc):
         content={"message": "Oh no! Something went wrong on our end. Please try again later."}
     )
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    return {"message": "Welcome to Smart To Do API"}
+    html_path = Path("templates/index.html")
+    return html_path.read_text(encoding="utf-8")
 
 app.include_router(api_router, prefix="/api/v1")
