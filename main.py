@@ -36,6 +36,27 @@ async def http_exception_handler(request, exc):
         content={"message": str(exc.detail)}
     )
 
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    # Get the first error message to keep it clean and human-friendly
+    error = exc.errors()[0]
+    field = error.get('loc', ['unknown'])[-1]
+    msg = error.get('msg', 'Invalid input')
+    
+    return JSONResponse(
+        status_code=422,
+        content={"message": f"Whoops! There's an issue with the '{field}': {msg}."}
+    )
+
+@app.exception_handler(Exception)
+async def generic_exception_handler(request, exc):
+    # Log the error here in a real app
+    print(f"INTERNAL ERROR: {exc}")
+    return JSONResponse(
+        status_code=500,
+        content={"message": "Oh no! Something went wrong on our end. Please try again later."}
+    )
+
 @app.get("/")
 async def root():
     return {"message": "Welcome to Smart To Do API"}

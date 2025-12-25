@@ -3,11 +3,13 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from core.security import create_access_token, get_password_hash, verify_password
+from core.security import create_access_token, create_refresh_token, get_password_hash, verify_password
 from models.user import User
 from schemas.user import UserCreate, UserOut
 from schemas.token import Token
 from core.config import settings
+import jwt
+from core.security import ALGORITHM
 
 router = APIRouter()
 
@@ -17,7 +19,7 @@ async def signup(user_in: UserCreate):
     if user:
         raise HTTPException(
             status_code=400,
-            detail="User with this email already exists"
+            detail="This Email is already registered"
         )
     
     hashed_password = get_password_hash(user_in.password)
@@ -43,4 +45,44 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     access_token = create_access_token(
         subject=user.email, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    refresh_token = create_refresh_token(subject=user.email)
+    
+    return {
+        "access_token": access_token, 
+        "refresh_token": refresh_token,
+        "token_type": "bearer"
+    }
+
+@router.post("/refresh", response_model=Token)
+async def refresh_token(token: str):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        type: str = payload.get("type")
+        if email is None or type != "refresh":
+            raise credentials_exception
+    except jwt.PyJWTError:
+        raise credentials_exception
+    
+    # Check if user exists
+    user = await User.find_one(User.email == email)
+    if not user:
+        raise credentials_exception
+
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        subject=user.email, expires_delta=access_token_expires
+    )
+    # Refresh token rotation
+    new_refresh_token = create_refresh_token(subject=user.email)
+    
+    return {
+        "access_token": access_token,
+        "refresh_token": new_refresh_token,
+        "token_type": "bearer"
+    }

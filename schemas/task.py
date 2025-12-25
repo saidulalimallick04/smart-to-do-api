@@ -1,6 +1,8 @@
-from pydantic import BaseModel, Field
-from typing import Optional, List
+from pydantic import BaseModel, Field, BeforeValidator
+from typing import Optional, List, Annotated
 from datetime import datetime
+
+PyObjectId = Annotated[str, BeforeValidator(str)]
 
 class TaskCreate(BaseModel):
     title: str = Field(..., min_length=1)
@@ -16,7 +18,7 @@ class TaskUpdate(BaseModel):
     tags: Optional[List[str]] = None
 
 class TaskOut(BaseModel):
-    id: str
+    id: PyObjectId
     title: str
     description: Optional[str] = None
     is_completed: bool

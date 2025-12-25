@@ -1,10 +1,12 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
+from pydantic import BaseModel, EmailStr, Field, BeforeValidator
+from typing import Optional, Annotated
 from uuid import UUID
+
+PyObjectId = Annotated[str, BeforeValidator(str)]
 
 class UserCreate(BaseModel):
     email: EmailStr
-    password: str
+    password: str = Field(min_length=8, max_length=72, description="Password must be between 8 and 72 characters")
     full_name: Optional[str] = None
 
 class UserUpdate(BaseModel):
@@ -13,7 +15,7 @@ class UserUpdate(BaseModel):
     full_name: Optional[str] = None
 
 class UserOut(BaseModel):
-    id: str
+    id: PyObjectId
     email: EmailStr
     full_name: Optional[str] = None
     

@@ -2,6 +2,16 @@ import pytest
 
 @pytest.mark.anyio
 async def test_create_task(async_client):
+    # Register first
+    await async_client.post(
+        "/api/v1/auth/signup",
+        json={
+            "email": "test@example.com",
+            "password": "testpassword",
+            "full_name": "Test User"
+        }
+    )
+
     # Login first
     login_response = await async_client.post(
         "/api/v1/auth/login",
