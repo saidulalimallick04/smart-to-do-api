@@ -6,13 +6,18 @@ This API supports **JWT Authentication** (Access + Refresh Tokens) and provides 
 
 ---
 
+## 🌐 Base URL
+
+- **Local**: `http://localhost:8000`
+- **Live (Vercel)**: `https://smart-to-do-api.vercel.app`
+
 ## 🔐 Authentication
 
 ### 1. User Signup
 
 Register a new user account.
 
-- **Endpoint**: `POST /auth/signup`
+- **Endpoint**: `POST /api/v1/auth/signup`
 - **Body** (JSON):
 
   ```json
@@ -29,7 +34,7 @@ Register a new user account.
 
 Authenticate to receive access and refresh tokens.
 
-- **Endpoint**: `POST /auth/login`
+- **Endpoint**: `POST /api/v1/auth/login`
 - **Body** (Form Data / `x-www-form-urlencoded`):
   - `username`: `user@example.com`
   - `password`: `strongpassword`
@@ -49,8 +54,7 @@ Authenticate to receive access and refresh tokens.
 
 Get a new access token using a valid refresh token.
 
-- **Endpoint**: `POST /auth/refresh`
-- **Endpoint**: `POST /auth/refresh`
+- **Endpoint**: `POST /api/v1/auth/refresh`
 - **Body** (JSON):
 
   ```json
@@ -78,7 +82,7 @@ Get a new access token using a valid refresh token.
 
 Create a new task. The system will automatically infer tags and priority if context is detected.
 
-- **Endpoint**: `POST /tasks/`
+- **Endpoint**: `POST /api/v1/tasks/`
 - **Body** (JSON):
 
   ```json
@@ -99,25 +103,25 @@ Create a new task. The system will automatically infer tags and priority if cont
 
 Retrieve a list of tasks with optional filtering.
 
-- **Endpoint**: `GET /tasks/`
+- **Endpoint**: `GET /api/v1/tasks/`
 - **Query Parameters**:
   - `skip`: Number of records to skip (default: 0).
   - `limit`: Max records to return (default: 100).
   - `priority`: Filter by priority (`low`, `medium`, `high`).
   - `is_completed`: Filter by status (`true`, `false`).
-- **Example**: `GET /tasks/?priority=high&is_completed=false`
+- **Example**: `GET /api/v1/tasks/?priority=high&is_completed=false`
 
 ### 6. Get Specific Task
 
 Retrieve details of a single task.
 
-- **Endpoint**: `GET /tasks/{task_id}`
+- **Endpoint**: `GET /api/v1/tasks/{task_id}`
 
 ### 7. Update Task
 
 Update task details.
 
-- **Endpoint**: `PUT /tasks/{task_id}`
+- **Endpoint**: `PUT /api/v1/tasks/{task_id}`
 - **Body** (JSON):
 
   ```json
@@ -130,7 +134,7 @@ Update task details.
 
 Permanently remove a task.
 
-- **Endpoint**: `DELETE /tasks/{task_id}`
+- **Endpoint**: `DELETE /api/v1/tasks/{task_id}`
 
 ---
 

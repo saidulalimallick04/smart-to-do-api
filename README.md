@@ -2,6 +2,10 @@
 
 A robust, user-centric, RESTful backend for task management suitable for user-friendly applications. Built with FastAPI, MongoDB (Motor + Beanie), and JWT Authentication.
 
+## 🚀 Live Demo
+
+Try the API instantly without any setup: **[https://smart-to-do-api.vercel.app](https://smart-to-do-api.vercel.app)**
+
 ## Features
 
 - **Project Structure**: Modular, scalable architecture.
