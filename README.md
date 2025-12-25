@@ -43,6 +43,14 @@ graph TD
 - **Authentication**: OAuth2 with Password Flow + JWT
 - **Tooling**: `uv` (Fast Python Package Installer), `pytest` (Testing)
 
+## 📚 Documentation
+
+For detailed API usage and examples:
+
+- 📖 **[API Documentation](API_DOCUMENTATION.md)**: Full endpoint reference, error codes, and schemas.
+- � **[Project Blueprint](blueprint.md)**: Detailed breakdown of the development phases and architecture decisions.
+- �🚀 **[Postman Collection](postman_collection.json)**: Import this file into Postman to test all endpoints instantly.
+
 ## Setup
 
 1. **Clone the repository**:
@@ -97,6 +105,22 @@ graph TD
    uvicorn main:app --reload
    ```
 
+## Testing
+
+Run the test suite to verify functionality:
+
+**Recommended (using `uv`)**:
+
+```bash
+uv run pytest
+```
+
+**Alternative (Standard)**:
+
+```bash
+pytest
+```
+
 ## 📂 Project Structure
 
 ```bash
@@ -130,29 +154,6 @@ smart-to-do-api/
 ├── API_DOCUMENTATION.md
 ├── postman_collection.json
 └── .env
-```
-
-## 📚 Documentation
-
-For detailed API usage and examples:
-
-- 📖 **[API Documentation](API_DOCUMENTATION.md)**: Full endpoint reference, error codes, and schemas.
-- 🚀 **[Postman Collection](postman_collection.json)**: Import this file into Postman to test all endpoints instantly.
-
-## Testing
-
-Run the test suite to verify functionality:
-
-**Recommended (using `uv`)**:
-
-```bash
-uv run pytest
-```
-
-**Alternative (Standard)**:
-
-```bash
-pytest
 ```
 
 ---
