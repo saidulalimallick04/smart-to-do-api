@@ -1,0 +1,905 @@
+{#
+================================================================================
+BACKEND API LANDING PAGE - JINJA2 TEMPLATE
+================================================================================
+
+This is a portable Jinja2 template version of the Backend API Landing Page.
+Pass the context variables listed below when rendering this template.
+
+================================================================================
+REQUIRED CONTEXT VARIABLES (20)
+================================================================================
+
+PROJECT INFO (5):
+- project_name : str → Project display name (e.g., "My API")
+- project_version : str → Version badge text (e.g., "v1.0.0")
+- project_description : str → SEO meta description
+- project_keywords : str → SEO keywords (comma-separated)
+- project_repo_url : str → GitHub repository URL
+
+DEVELOPERS (1) - List of team members:
+- developers : list → List of developer dicts with keys:
+├── name : str → Full name (e.g., "Saidul Ali Mallick")
+├── username : str → GitHub username (e.g., "saidulalimallick04")
+├── role : str → Role title (e.g., "Backend Developer")
+├── quote : str → Optional tagline (e.g., "Building robust APIs...")
+├── github_url : str → GitHub profile URL
+├── linkedin_url : str → LinkedIn profile URL
+└── twitter_url : str → X/Twitter profile URL
+
+HERO SECTION (3):
+- hero_badge_text : str → Badge text (e.g., "Production Ready")
+- hero_title : str → Main hero title (e.g., "Backend API")
+- hero_description : str → Hero description paragraph
+
+API STATS (5):
+- api_total_endpoints : str → Total count (e.g., "15+")
+- api_get_count : int → Number of GET endpoints
+- api_post_count : int → Number of POST endpoints
+- api_put_count : int → Number of PUT endpoints
+- api_delete_count : int → Number of DELETE endpoints
+
+ABOUT SECTION (1):
+- about_description : str → API description text
+
+TECH STACK (1):
+- tech_stack : list → [{"icon": "fab fa-python", "name": "Python"}, ...]
+
+QUICK LINKS (1):
+- quick_links : list → [{"icon": "fas fa-book", "name": "Docs", "url": "#"}, ...]
+
+SERVER STATUS (3):
+- server_status : str → Status text (e.g., "All Systems Operational")
+- server_api_status : str → API status (e.g., "Healthy")
+- server_db_status : str → Database status (e.g., "Connected")
+
+================================================================================
+EXAMPLE USAGE (Python/FastAPI)
+================================================================================
+
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
+
+app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/")
+async def home(request: Request):
+return templates.TemplateResponse("index_jinja.html", {
+"request": request,
+"project_name": "My Awesome API",
+"project_version": "v2.0.0",
+"developers": [
+{
+"name": "Saidul Ali Mallick",
+"username": "saidulalimallick04",
+"role": "Backend Developer & AIML Engineer",
+"quote": "Building robust APIs, one endpoint at a time.",
+"github_url": "https://github.com/saidulalimallick04",
+"linkedin_url": "https://linkedin.com/in/saidulalimallick04",
+"twitter_url": "https://x.com/saidulmallick04"
+},
+# Add more developers as needed...
+],
+# ... add all other variables
+})
+
+================================================================================
+#}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{{ project_description }}">
+    <meta name="keywords" content="{{ project_keywords }}">
+    <meta name="author" content="{{ developer_name }}">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="{{ project_name }} - API Landing Page">
+    <meta property="og:description" content="{{ project_description }}">
+    <meta property="og:type" content="website">
+
+    <title>{{ project_name }} | Welcome</title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Inline Styles -->
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --accent-primary: #0ea5e9;
+            --accent-secondary: #8b5cf6;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #334155;
+            --accent-primary: #38bdf8;
+            --accent-secondary: #a78bfa;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            padding: 8px 16px;
+            background: var(--accent-primary);
+            color: white;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .method-get {
+            background-color: #22c55e;
+        }
+
+        .method-post {
+            background-color: #3b82f6;
+        }
+
+        .method-put {
+            background-color: #f59e0b;
+        }
+
+        .method-delete {
+            background-color: #ef4444;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-online {
+            background-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.1);
+            }
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            max-width: 85vw;
+            height: 100vh;
+            background-color: var(--bg-card);
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(0);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-muted);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        .social-github:hover {
+            color: #333;
+        }
+
+        [data-theme="dark"] .social-github:hover {
+            color: #f0f6fc;
+        }
+
+        .social-linkedin:hover {
+            color: #0a66c2;
+        }
+
+        .social-twitter:hover {
+            color: #1da1f2;
+        }
+    </style>
+</head>
+
+<body class="font-inter min-h-screen">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 backdrop-blur-md border-b"
+        style="background-color: rgba(var(--bg-primary), 0.9); border-color: var(--border-color);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Project Name -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style="background: linear-gradient(135deg, #0ea5e9, #8b5cf6);">
+                        <i class="fas fa-server text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-xl font-bold">
+                        <span class="gradient-text">{{ project_name }}</span>
+                    </h1>
+                    <span class="hidden sm:inline-block px-2 py-0.5 text-xs font-medium rounded-full"
+                        style="background-color: var(--accent-primary); color: white;">
+                        {{ project_version }}
+                    </span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="#home" class="text-sm font-medium hover:opacity-80" style="color: var(--text-primary);">
+                        <i class="fas fa-home mr-1"></i> Home
+                    </a>
+                    <a href="#docs" class="text-sm font-medium hover:opacity-80" style="color: var(--text-secondary);">
+                        <i class="fas fa-book mr-1"></i> Docs
+                    </a>
+                    <a href="#api" class="text-sm font-medium hover:opacity-80" style="color: var(--text-secondary);">
+                        <i class="fas fa-code mr-1"></i> API
+                    </a>
+                    <a href="#team" class="text-sm font-medium hover:opacity-80" style="color: var(--text-secondary);">
+                        <i class="fas fa-users mr-1"></i> Team
+                    </a>
+                </nav>
+
+                <!-- Right Side Actions -->
+                <div class="flex items-center gap-3">
+                    <button id="theme-toggle"
+                        class="w-10 h-10 rounded-lg flex items-center justify-center hover:opacity-80"
+                        style="background-color: var(--bg-secondary);" aria-label="Toggle theme">
+                        <i class="fas fa-moon" id="theme-icon" style="color: var(--text-primary);"></i>
+                    </button>
+
+                    <a href="{{ project_repo_url }}"
+                        class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
+                        style="background-color: var(--bg-secondary); color: var(--text-primary);" target="_blank"
+                        rel="noopener noreferrer" title="View Project on GitHub">
+                        <i class="fab fa-github"></i>
+                        <span class="hidden lg:inline">GitHub</span>
+                    </a>
+
+                    <button id="mobile-menu-btn" class="md:hidden w-10 h-10 rounded-lg flex items-center justify-center"
+                        style="background-color: var(--bg-secondary);" aria-label="Open menu">
+                        <i class="fas fa-bars text-xl" style="color: var(--text-primary);"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE OVERLAY -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
+    <!-- MOBILE SIDEBAR -->
+    <aside id="mobile-sidebar" class="mobile-sidebar">
+        <div class="p-4 border-b flex items-center justify-between" style="border-color: var(--border-color);">
+            <h2 class="text-lg font-semibold" style="color: var(--text-primary);">Menu</h2>
+            <button id="close-sidebar-btn" class="w-10 h-10 rounded-lg flex items-center justify-center"
+                style="background-color: var(--bg-secondary);" aria-label="Close menu">
+                <i class="fas fa-times text-xl" style="color: var(--text-primary);"></i>
+            </button>
+        </div>
+        <nav class="p-4 space-y-2">
+            <a href="#home" class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-lg hover:opacity-80"
+                style="background-color: var(--bg-secondary); color: var(--text-primary);">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="#docs" class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-lg hover:opacity-80"
+                style="color: var(--text-secondary);">
+                <i class="fas fa-book"></i> Documentation
+            </a>
+            <a href="#api" class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-lg hover:opacity-80"
+                style="color: var(--text-secondary);">
+                <i class="fas fa-code"></i> API Reference
+            </a>
+            <a href="#team" class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-lg hover:opacity-80"
+                style="color: var(--text-secondary);">
+                <i class="fas fa-users"></i> Team
+            </a>
+        </nav>
+        <div class="m-4 p-4 rounded-xl" style="background-color: var(--bg-secondary);">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="status-dot status-online"></span>
+                <span class="font-medium" style="color: var(--text-primary);">Server Status</span>
+            </div>
+            <p class="text-sm" style="color: var(--text-muted);">{{ server_status }}</p>
+        </div>
+    </aside>
+
+    <!-- MAIN LAYOUT -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="lg:flex lg:gap-8">
+            <!-- MAIN CONTENT -->
+            <main id="main-content" class="flex-1 space-y-8">
+
+                <!-- Hero Section -->
+                <section id="home" class="relative rounded-2xl overflow-hidden p-8 sm:p-12"
+                    style="background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 50%, #ec4899 100%);">
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium mb-6"
+                            style="background-color: rgba(255,255,255,0.2); color: white;">
+                            <i class="fas fa-rocket"></i>
+                            <span>{{ hero_badge_text }}</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+                            Welcome to the<br>
+                            <span class="opacity-90">{{ hero_title }}</span>
+                        </h2>
+                        <p class="text-lg text-white/80 max-w-2xl mb-8">
+                            {{ hero_description }}
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="/docs" class="inline-flex flex-col items-center gap-1 px-6 py-3 rounded-lg font-medium
+                                                   bg-white text-gray-900 hover:bg-gray-100 transition-colors">
+                                <span class="flex items-center gap-2">
+                                    <i class="fas fa-book"></i> View Documentation
+                                </span>
+                                <span class="text-xs opacity-70">(Swagger UI)</span>
+                            </a>
+                            <a href="/redoc"
+                                class="inline-flex flex-col items-center gap-1 px-6 py-3 rounded-lg font-medium
+                                                  border-2 border-white/50 text-white hover:bg-white/10 transition-colors">
+                                <span class="flex items-center gap-2">
+                                    <i class="fas fa-file-alt"></i> Alternative Docs
+                                </span>
+                                <span class="text-xs opacity-70">(Redocly)</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- About Section -->
+                <section id="docs" class="rounded-2xl p-6 sm:p-8"
+                    style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center"
+                            style="background-color: var(--accent-primary); color: white;">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <h3 class="text-xl font-bold" style="color: var(--text-primary);">About This API</h3>
+                    </div>
+                    <p class="mb-6" style="color: var(--text-secondary);">
+                        {{ about_description }}
+                    </p>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="flex items-start gap-4 p-4 rounded-xl"
+                            style="background-color: var(--bg-secondary);">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                                style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
+                                <i class="fas fa-bolt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1" style="color: var(--text-primary);">Lightning Fast</h4>
+                                <p class="text-sm" style="color: var(--text-muted);">Sub-100ms response times</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 rounded-xl"
+                            style="background-color: var(--bg-secondary);">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                                style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+                                <i class="fas fa-shield-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1" style="color: var(--text-primary);">Secure by Design</h4>
+                                <p class="text-sm" style="color: var(--text-muted);">JWT with RBAC</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 rounded-xl"
+                            style="background-color: var(--bg-secondary);">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                                style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                                <i class="fas fa-expand-arrows-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1" style="color: var(--text-primary);">Highly Scalable</h4>
+                                <p class="text-sm" style="color: var(--text-muted);">Handles millions of requests</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 rounded-xl"
+                            style="background-color: var(--bg-secondary);">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                                style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
+                                <i class="fas fa-file-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1" style="color: var(--text-primary);">Well Documented</h4>
+                                <p class="text-sm" style="color: var(--text-muted);">Comprehensive examples</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- API Endpoints Section -->
+                <section id="api" class="rounded-2xl p-6 sm:p-8"
+                    style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center"
+                            style="background-color: var(--accent-secondary); color: white;">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold" style="color: var(--text-primary);">API Endpoints</h3>
+                    </div>
+                    <p class="mb-6" style="color: var(--text-secondary);">
+                        Explore the available API endpoints and start integrating today.
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <!-- Endpoint Stats -->
+                        <div class="p-4 rounded-xl" style="background-color: var(--bg-secondary);">
+                            <div class="flex items-center gap-2 mb-4">
+                                <i class="fas fa-chart-pie" style="color: var(--accent-secondary);"></i>
+                                <h4 class="font-semibold" style="color: var(--text-primary);">Endpoint Stats</h4>
+                            </div>
+                            <div class="text-center p-3 rounded-lg mb-4"
+                                style="background: linear-gradient(135deg, rgba(14,165,233,0.1), rgba(139,92,246,0.1)); border: 1px solid var(--border-color);">
+                                <span class="text-3xl font-bold gradient-text">{{ api_total_endpoints }}</span>
+                                <p class="text-xs mt-1" style="color: var(--text-muted);">Total Endpoints</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-12 px-2 py-0.5 rounded text-xs font-bold text-white text-center"
+                                        style="background-color: #22c55e;">GET</span>
+                                    <div class="flex-1 h-2 rounded-full" style="background-color: var(--bg-card);">
+                                        <div class="h-full rounded-full"
+                                            style="width: {{ (api_get_count / 15 * 100)|int }}%; background-color: #22c55e;">
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-medium w-4" style="color: #22c55e;">{{ api_get_count
+                                        }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-12 px-2 py-0.5 rounded text-xs font-bold text-white text-center"
+                                        style="background-color: #3b82f6;">POST</span>
+                                    <div class="flex-1 h-2 rounded-full" style="background-color: var(--bg-card);">
+                                        <div class="h-full rounded-full"
+                                            style="width: {{ (api_post_count / 15 * 100)|int }}%; background-color: #3b82f6;">
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-medium w-4" style="color: #3b82f6;">{{ api_post_count
+                                        }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-12 px-2 py-0.5 rounded text-xs font-bold text-white text-center"
+                                        style="background-color: #f59e0b;">PUT</span>
+                                    <div class="flex-1 h-2 rounded-full" style="background-color: var(--bg-card);">
+                                        <div class="h-full rounded-full"
+                                            style="width: {{ (api_put_count / 15 * 100)|int }}%; background-color: #f59e0b;">
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-medium w-4" style="color: #f59e0b;">{{ api_put_count
+                                        }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-12 px-2 py-0.5 rounded text-xs font-bold text-white text-center"
+                                        style="background-color: #ef4444;">DEL</span>
+                                    <div class="flex-1 h-2 rounded-full" style="background-color: var(--bg-card);">
+                                        <div class="h-full rounded-full"
+                                            style="width: {{ (api_delete_count / 15 * 100)|int }}%; background-color: #ef4444;">
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-medium w-4" style="color: #ef4444;">{{ api_delete_count
+                                        }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- API Versions -->
+                        <div class="p-4 rounded-xl" style="background-color: var(--bg-secondary);">
+                            <div class="flex items-center gap-2 mb-4">
+                                <i class="fas fa-code-branch" style="color: #22c55e;"></i>
+                                <h4 class="font-semibold" style="color: var(--text-primary);">API Versions</h4>
+                            </div>
+                            <div class="text-center p-3 rounded-lg mb-4"
+                                style="background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05)); border: 1px solid rgba(34,197,94,0.3);">
+                                <div class="flex items-center justify-center gap-2">
+                                    <span class="status-dot status-online"></span>
+                                    <span class="text-2xl font-bold" style="color: #22c55e;">v1</span>
+                                </div>
+                                <p class="text-xs mt-1" style="color: var(--text-muted);">Current & Stable</p>
+                            </div>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex items-center gap-2 p-2 rounded-lg"
+                                    style="background-color: var(--bg-card);">
+                                    <i class="fas fa-check-circle text-xs" style="color: #22c55e;"></i>
+                                    <span style="color: var(--text-secondary);">URL: <code
+                                            style="color: var(--accent-primary);">/api/v1/*</code></span>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 rounded-lg"
+                                    style="background-color: var(--bg-card);">
+                                    <i class="fas fa-shield-alt text-xs" style="color: #3b82f6;"></i>
+                                    <span style="color: var(--text-secondary);">RESTful Design</span>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 rounded-lg"
+                                    style="background-color: var(--bg-card);">
+                                    <i class="fas fa-file-code text-xs" style="color: #8b5cf6;"></i>
+                                    <span style="color: var(--text-secondary);">JSON Responses</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/docs" class="inline-flex items-center gap-2 mt-6 text-sm font-medium"
+                        style="color: var(--accent-primary);">
+                        View full documentation <i class="fas fa-arrow-right"></i>
+                    </a>
+                </section>
+
+                <!-- Team Section -->
+                <section id="team" class="rounded-2xl p-6 sm:p-8"
+                    style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center"
+                            style="background: linear-gradient(135deg, #ec4899, #be185d);">
+                            <i class="fas fa-users text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold" style="color: var(--text-primary);">Development Team</h3>
+                    </div>
+
+                    <!-- Developer Cards - Full width horizontal layout per developer -->
+                    <div class="space-y-6">
+                        {% for dev in developers %}
+                        <div class="relative rounded-2xl p-1.5"
+                            style="background: linear-gradient(135deg, #0ea5e9, #8b5cf6, #ec4899);">
+                            <div class="rounded-xl p-6 lg:p-8 flex flex-col lg:flex-row items-center gap-6"
+                                style="background-color: var(--bg-secondary);">
+
+                                <!-- Avatar -->
+                                <img src="https://github.com/{{ dev.username }}.png?size=100" alt="{{ dev.name }}"
+                                    class="w-28 h-28 rounded-full ring-4 shadow-xl flex-shrink-0"
+                                    style="--tw-ring-color: var(--accent-primary); background-color: var(--bg-card);">
+
+                                <!-- User Info - Left aligned on desktop -->
+                                <div class="text-center lg:text-left flex-1">
+                                    <h4 class="text-2xl font-bold mb-1" style="color: var(--text-primary);">
+                                        {{ dev.name }}
+                                    </h4>
+                                    <p class="text-sm mb-3" style="color: var(--text-muted);">
+                                        @{{ dev.username }}
+                                    </p>
+
+                                    <!-- Role Badge -->
+                                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-4"
+                                        style="background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(139,92,246,0.15)); color: var(--accent-primary);">
+                                        <i class="fas fa-code"></i>
+                                        <span>{{ dev.role }}</span>
+                                    </div>
+
+                                    <!-- Quote (optional) -->
+                                    {% if dev.quote %}
+                                    <p class="text-sm italic hidden lg:block" style="color: var(--text-muted);">
+                                        "{{ dev.quote }}"
+                                    </p>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Social Links - Right side on desktop, horizontal on mobile -->
+                                <div class="flex lg:flex-col gap-3">
+                                    <a href="{{ dev.github_url }}" target="_blank" rel="noopener noreferrer"
+                                        title="GitHub"
+                                        class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                                        style="background: linear-gradient(135deg, #24292e, #1a1e22); color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                                        <i class="fab fa-github text-xl"></i>
+                                    </a>
+                                    <a href="{{ dev.linkedin_url }}" target="_blank" rel="noopener noreferrer"
+                                        title="LinkedIn"
+                                        class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                                        style="background: linear-gradient(135deg, #0077b5, #005885); color: white; box-shadow: 0 4px 15px rgba(0,119,181,0.3);">
+                                        <i class="fab fa-linkedin-in text-xl"></i>
+                                    </a>
+                                    <a href="{{ dev.twitter_url }}" target="_blank" rel="noopener noreferrer"
+                                        title="X (Twitter)"
+                                        class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                                        style="background: linear-gradient(135deg, #14171a, #000000); color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                                        <i class="fab fa-x-twitter text-xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </main>
+
+            <!-- SIDEBAR (Desktop) -->
+            <aside class="hidden lg:block lg:w-80 lg:flex-shrink-0">
+                <div class="lg:sticky lg:top-20 space-y-6">
+                    <!-- Server Status -->
+                    <div class="rounded-2xl p-6"
+                        style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fas fa-signal" style="color: var(--accent-primary);"></i>
+                            <h3 class="font-semibold" style="color: var(--text-primary);">Server Status</h3>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="status-dot status-online"></span>
+                            <span class="text-sm font-medium" style="color: #22c55e;">{{ server_status }}</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span style="color: var(--text-muted);">API</span>
+                                <span class="font-medium" style="color: #22c55e;">{{ server_api_status }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span style="color: var(--text-muted);">Database</span>
+                                <span class="font-medium" style="color: #22c55e;">{{ server_db_status }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="rounded-2xl p-6"
+                        style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fas fa-link" style="color: var(--accent-secondary);"></i>
+                            <h3 class="font-semibold" style="color: var(--text-primary);">Quick Links</h3>
+                        </div>
+                        <nav class="space-y-2">
+                            {% for link in quick_links %}
+                            <a href="{{ link.url }}"
+                                class="flex items-center gap-3 p-2 rounded-lg text-sm hover:opacity-80"
+                                style="color: var(--text-secondary);">
+                                <i class="{{ link.icon }} w-5" style="color: var(--accent-primary);"></i>
+                                <span class="flex-1">{{ link.name }}</span>
+                                <i class="fas fa-external-link-alt text-xs" style="color: var(--text-muted);"></i>
+                            </a>
+                            {% endfor %}
+                        </nav>
+                    </div>
+
+                    <!-- Tech Stack -->
+                    <div class="rounded-2xl p-6"
+                        style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fas fa-layer-group" style="color: var(--accent-primary);"></i>
+                            <h3 class="font-semibold" style="color: var(--text-primary);">Tech Stack</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            {% for tech in tech_stack %}
+                            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium"
+                                style="background-color: var(--bg-secondary); color: var(--text-secondary);">
+                                <i class="{{ tech.icon }}"></i> {{ tech.name }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-16 border-t" style="background-color: var(--bg-secondary); border-color: var(--border-color);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                            style="background: linear-gradient(135deg, #0ea5e9, #8b5cf6);">
+                            <i class="fas fa-server text-white text-sm"></i>
+                        </div>
+                        <span class="font-bold" style="color: var(--text-primary);">{{ project_name }}</span>
+                    </div>
+                    <p class="text-sm" style="color: var(--text-muted);">
+                        Professional API landing page. Built with ❤️
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4" style="color: var(--text-primary);">Resources</h4>
+                    <ul class="space-y-2 text-sm" style="color: var(--text-secondary);">
+                        <li><a href="/docs" class="hover:opacity-80"><i class="fas fa-book mr-2"></i>Documentation</a>
+                        </li>
+                        <li><a href="/redoc" class="hover:opacity-80"><i class="fas fa-code mr-2"></i>API Reference</a>
+                        </li>
+                        <li><a href="{{ project_repo_url }}" class="hover:opacity-80"><i
+                                    class="fab fa-github mr-2"></i>GitHub</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4" style="color: var(--text-primary);">Support</h4>
+                    <ul class="space-y-2 text-sm" style="color: var(--text-secondary);">
+                        <li><a href="#" class="hover:opacity-80"><i class="fas fa-question-circle mr-2"></i>Help
+                                Center</a></li>
+                        <li><a href="#" class="hover:opacity-80"><i class="fas fa-bug mr-2"></i>Report Issue</a></li>
+                        <li><a href="#" class="hover:opacity-80"><i class="fas fa-envelope mr-2"></i>Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4" style="color: var(--text-primary);">Developer</h4>
+                    <ul class="space-y-2 text-sm" style="color: var(--text-secondary);">
+                        {% if developers %}
+                        <li><a href="{{ developers[0].github_url }}" class="hover:opacity-80"><i
+                                    class="fab fa-github mr-2"></i>GitHub</a></li>
+                        <li><a href="{{ developers[0].linkedin_url }}" class="hover:opacity-80"><i
+                                    class="fab fa-linkedin mr-2"></i>LinkedIn</a></li>
+                        <li><a href="{{ developers[0].twitter_url }}" class="hover:opacity-80"><i
+                                    class="fab fa-x-twitter mr-2"></i>X</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t flex flex-col sm:flex-row items-center justify-between gap-4"
+                style="border-color: var(--border-color);">
+                <p class="text-sm" style="color: var(--text-muted);">
+                    © <span id="current-year">2025</span> {{ project_name }}. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    {% if developers %}
+                    <a href="{{ developers[0].github_url }}" target="_blank" class="social-github"
+                        style="color: var(--text-secondary);">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="{{ developers[0].linkedin_url }}" target="_blank" class="social-linkedin"
+                        style="color: var(--text-secondary);">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="{{ developers[0].twitter_url }}" target="_blank" class="social-twitter"
+                        style="color: var(--text-secondary);">
+                        <i class="fab fa-x-twitter text-xl"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Mobile Sidebar
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+
+        function openSidebar() {
+            mobileSidebar.classList.add('active');
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            mobileSidebar.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn.addEventListener('click', openSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        mobileOverlay.addEventListener('click', closeSidebar);
+        document.querySelectorAll('.mobile-nav-link').forEach(link => link.addEventListener('click', closeSidebar));
+
+        // Dynamic Year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+
+</html>

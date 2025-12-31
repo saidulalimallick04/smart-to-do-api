@@ -84,3 +84,21 @@ This document outlines the 10 distinct phases of development for the Smart To Do
 - **README.md**: Comprehensive setup guide, architecture diagram, and tech stack.
 - **API Documentation**: Detailed endpoint breakdown in `API_DOCUMENTATION.md`.
 - **Postman**: Ready-to-use `postman_collection.json` with environment variables.
+
+## Phase 11: Deployment & Production Readiness
+
+**Goal:** Ensure the API is accessible and user-friendly in a live environment.
+
+- **Deployment Platform**: Vercel (Deployed at `https://smart-to-do-api.vercel.app`).
+- **Documentation Alignment**:
+  - Updated `README.md` with "Live Demo" links.
+  - Aligned `API_DOCUMENTATION.md` Base URL with Postman (removed prefix ambiguity).
+  - Enhanced Postman Collection with dedicated "List All", "List Pending", and "Pagination" requests.
+
+## Phase 12: Developer Experience (DevX) Enhancements
+
+**Goal:** Making the project approachable for other developers.
+
+- **Landing Page**: Created a glassmorphic HTML landing page (`templates/index_jinja.html`) served at the root `/` to introduce the API.
+- **Learning Artifacts**: Created `learning_outcomes.md` to document the architectural decisions and libraries for educational purposes.
+- **Reference Links**: Added clear cross-references between the Blueprint, API Docs, and README for seamless navigation.
